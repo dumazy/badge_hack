@@ -8,15 +8,14 @@ class UserRepository {
     required String userId,
   }) : _docRef = FirebaseFirestore.instance.collection('users').doc(userId);
 
-  Stream<User> getUserStream() {
-    return Stream.value(
-      User(
-        handle: 'test',
-        name: 'test',
-        profilePictureUrl: 'test',
-      ),
-    );
+  Future<User> getUser() async {
+    final snapshot = await _docRef.get();
+    return User.fromMap(snapshot.data() as Map<String, dynamic>);
   }
 
-  Future<void> updateUser(User user) async {}
+  Future<void> updateName(String name) async {
+    await _docRef.update({
+      'name': name,
+    });
+  }
 }

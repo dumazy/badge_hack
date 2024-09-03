@@ -12,4 +12,8 @@ class AuthRepository {
   Future<void> updateName(String name) async {
     await _user.updateDisplayName(name);
   }
+
+  Future<String> getUserId() async {
+    return _user.uid;
+  }
 }

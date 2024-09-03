@@ -1,6 +1,7 @@
 import 'package:badge_hack/firebase_options.dart';
 import 'package:badge_hack/locator.dart';
 import 'package:badge_hack/nfc_reader.dart';
+import 'package:badge_hack/profile/src/data/auth_repository.dart';
 import 'package:badge_hack/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,9 @@ class BadgeHackAppState extends State<BadgeHackApp> {
 
   Future<void> _loadApp(BuildContext context) async {
     final nfcReader = locator<NfcReader>();
-    await nfcReader.init();
+    final authRepository = locator<AuthRepository>();
+    await authRepository.initialize();
+    
   }
 
   @override

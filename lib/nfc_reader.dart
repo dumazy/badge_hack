@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:nfc_manager/nfc_manager.dart';
 
 class NfcReader {
-  final StreamController<String> _tagController =
-      StreamController<String>.broadcast();
+  Future<String> scanTag() async {
+    final completer = Completer<String>();
 
-  Future<void> init() async {
     await NfcManager.instance.startSession(
       onDiscovered: (tag) async {
         final ndef = Ndef.from(tag);
@@ -14,13 +13,26 @@ class NfcReader {
         if (ndef != null && ndef.cachedMessage != null) {
           final payload = ndef.cachedMessage!.records.firstOrNull?.payload;
           if (payload == null) return;
-          _tagController.add(String.fromCharCodes(payload));
+          completer.complete(String.fromCharCodes(payload));
+          await NfcManager.instance.stopSession();
         }
       },
     );
+    return completer.future;
   }
 
-  Stream<String> get onTagDiscovered {
-    return _tagController.stream;
+  Future<void> writeToTag(String data) async {
+    await NfcManager.instance.startSession(
+      onDiscovered: (tag) async {
+        final ndef = Ndef.from(tag);
+
+        if (ndef != null) {
+          await ndef.write(NdefMessage([
+            NdefRecord.createText(data),
+          ]));
+          await NfcManager.instance.stopSession();
+        }
+      },
+    );
   }
 }
