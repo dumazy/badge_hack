@@ -23,9 +23,11 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      name: map['name'] as String,
-      handle: map['handle'] as String,
-      profilePictureUrl: map['profilePictureUrl'] as String,
+      name: map['name'] != null ? map['name'] as String : '',
+      handle: map['handle'] != null ? map['handle'] as String : '',
+      profilePictureUrl: map['profilePictureUrl'] != null
+          ? map['profilePictureUrl'] as String
+          : '',
     );
   }
 

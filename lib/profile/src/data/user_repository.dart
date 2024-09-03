@@ -2,11 +2,15 @@ import 'package:badge_hack/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserRepository {
-  final DocumentReference _docRef;
+  late String userId;
+  late final DocumentReference _docRef;
 
-  UserRepository({
-    required String userId,
-  }) : _docRef = FirebaseFirestore.instance.collection('users').doc(userId);
+  UserRepository();
+
+  Future<void> initialize(String userId) async {
+    this.userId = userId;
+    _docRef = FirebaseFirestore.instance.collection('users').doc(userId);
+  }
 
   Future<User> getUser() async {
     final snapshot = await _docRef.get();
@@ -14,7 +18,7 @@ class UserRepository {
   }
 
   Future<void> updateName(String name) async {
-    await _docRef.update({
+    await _docRef.set({
       'name': name,
     });
   }

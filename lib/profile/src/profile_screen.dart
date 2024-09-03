@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
+  static Route<void> route() {
+    return MaterialPageRoute<void>(
+      builder: (_) => const ProfileScreen(),
+    );
+  }
+
   const ProfileScreen({super.key});
 
   @override
