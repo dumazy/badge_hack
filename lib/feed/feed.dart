@@ -96,8 +96,25 @@ class Feed extends StatelessWidget {
 }
 
 class Meeting {
-  Meeting({required this.who, required this.whom});
+  Meeting({
+    required this.who,
+    required this.whom,
+  });
 
   String who;
   String whom;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'who': who,
+      'whom': whom,
+    };
+  }
+
+  factory Meeting.fromMap(Map<String, dynamic> map) {
+    return Meeting(
+      who: map['who'] as String,
+      whom: map['whom'] as String,
+    );
+  }
 }
