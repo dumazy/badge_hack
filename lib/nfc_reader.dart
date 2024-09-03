@@ -7,10 +7,15 @@ class NfcReader {
       StreamController<String>.broadcast();
 
   Future<void> init() async {
-    NfcManager.instance.startSession(
+    await NfcManager.instance.startSession(
       onDiscovered: (tag) async {
-        print('tag discovered: ${tag.data}');
-        _tagController.add(tag.data['test'] as String);
+        final ndef = Ndef.from(tag);
+
+        if (ndef != null && ndef.cachedMessage != null) {
+          final payload = ndef.cachedMessage!.records.firstOrNull?.payload;
+          if (payload == null) return;
+          _tagController.add(String.fromCharCodes(payload!));
+        }
       },
     );
   }
