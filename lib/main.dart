@@ -1,5 +1,8 @@
+import 'dart:collection';
+
 import 'package:badge_hack/locator.dart';
 import 'package:badge_hack/nfc_reader.dart';
+import 'package:badge_hack/user.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -18,6 +21,25 @@ class BadgeHackApp extends StatefulWidget {
 
 class BadgeHackAppState extends State<BadgeHackApp> {
   Future<void>? _appLoader;
+
+  final users = [
+    User(
+      name: 'Name',
+      handle: '@handle',
+      profilePictureUrl: 'https://avatars.githubusercontent.com/u/2174500?v=4',
+    ),
+    User(
+      name: 'Name 42',
+      handle: '@handle42',
+      profilePictureUrl: 'https://avatars.githubusercontent.com/u/744771?v=4',
+    ),
+    User(
+      name: 'Name 4711',
+      handle: '@handle4711',
+      profilePictureUrl:
+          'https://avatars.githubusercontent.com/u/1919067?s=64&v=4',
+    ),
+  ];
 
   @override
   void didChangeDependencies() {
@@ -51,14 +73,22 @@ class BadgeHackAppState extends State<BadgeHackApp> {
               body: SafeArea(
                 child: ListView.builder(
                   itemBuilder: (context, index) {
-                    return const ListTile(
-                      leading: Icon(
-                        Icons.flutter_dash,
+                    return ListTile(
+                      leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.network(
+                            users[index].profilePictureUrl,
+                          )),
+                      title: Text(users[index].name),
+                      subtitle: Text(users[index].handle),
+                      tileColor: Colors.lightBlueAccent,
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 2,
+                        horizontal: 8,
                       ),
-                      title: Text('Name'),
-                      subtitle: Text('@handle'),
                     );
                   },
+                  itemCount: users.length,
                 ),
               ),
               floatingActionButton: FloatingActionButton(
