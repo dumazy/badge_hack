@@ -14,7 +14,7 @@ class NfcReader {
         if (ndef != null && ndef.cachedMessage != null) {
           final payload = ndef.cachedMessage!.records.firstOrNull?.payload;
           if (payload == null) return;
-          _tagController.add(String.fromCharCodes(payload!));
+          _tagController.add(String.fromCharCodes(payload));
         }
       },
     );

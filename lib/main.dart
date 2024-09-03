@@ -1,10 +1,15 @@
+import 'package:badge_hack/firebase_options.dart';
 import 'package:badge_hack/locator.dart';
 import 'package:badge_hack/nfc_reader.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const BadgeHackApp());
 }
