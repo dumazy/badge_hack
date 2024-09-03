@@ -10,6 +10,12 @@ class UserRepository {
   Future<void> initialize(String userId) async {
     this.userId = userId;
     _docRef = FirebaseFirestore.instance.collection('users').doc(userId);
+    final snapshot = await _docRef.get();
+    if (!snapshot.exists) {
+      await _docRef.set({
+        'name': '',
+      });
+    }
   }
 
   Future<User> getUser() async {
