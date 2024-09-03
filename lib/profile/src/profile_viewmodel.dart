@@ -1,3 +1,4 @@
+import 'package:badge_hack/debouncer.dart';
 import 'package:badge_hack/locator.dart';
 import 'package:badge_hack/nfc_reader.dart';
 import 'package:badge_hack/profile/src/data/auth_repository.dart';
@@ -10,15 +11,26 @@ class ProfileViewModel with ChangeNotifier {
   final UserRepository userRepository = locator<UserRepository>();
 
   final TextEditingController nameController = TextEditingController();
+  final _nameDebouncer = Debouncer(milliseconds: 1000);
 
   bool unsavedChanges = false;
   bool writing = false;
 
   ProfileViewModel() {
+    init();
+  }
+
+  Future<void> init() async {
     nameController.addListener(() {
       unsavedChanges = true;
-      notifyListeners();
+      _nameDebouncer.run(() {
+        unsavedChanges = false;
+        save();
+        notifyListeners();
+      });
     });
+    final user = await userRepository.getUser();
+    nameController.text = user.name;
   }
 
   Future<void> save() async {

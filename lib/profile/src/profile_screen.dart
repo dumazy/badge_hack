@@ -23,17 +23,29 @@ class ProfileScreen extends StatelessWidget {
           ),
           body: Column(
             children: [
-              TextField(
-                controller: viewModel.nameController,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your name',
+              Expanded(
+                child: Center(
+                  child: SizedBox(
+                    width: 200,
+                    child: TextField(
+                      controller: viewModel.nameController,
+                      style: const TextStyle(
+                        fontSize: 36,
+                      ),
+                      textAlign: TextAlign.center,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: 'Enter your name',
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: viewModel.save,
-                child: const Text('Save name'),
+              Expanded(
+                child: Center(
+                  child: _TagWriter(),
+                ),
               ),
-              _TagWriter(),
             ],
           ),
         );

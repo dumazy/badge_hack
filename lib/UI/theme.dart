@@ -34,5 +34,12 @@ ThemeData appTheme() {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: AppColors.accent,
     ),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.primaryRed,
+        ),
+      ),
+    ),
   );
 }

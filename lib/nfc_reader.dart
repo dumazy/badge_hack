@@ -22,6 +22,7 @@ class NfcReader {
   }
 
   Future<void> writeToTag(String data) async {
+    final completer = Completer<void>();
     await NfcManager.instance.startSession(
       onDiscovered: (tag) async {
         final ndef = Ndef.from(tag);
@@ -30,9 +31,11 @@ class NfcReader {
           await ndef.write(NdefMessage([
             NdefRecord.createText(data),
           ]));
+          completer.complete();
           await NfcManager.instance.stopSession();
         }
       },
     );
+    return completer.future;
   }
 }
