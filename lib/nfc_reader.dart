@@ -14,6 +14,8 @@ class NfcReader {
           final payload = ndef.cachedMessage!.records.firstOrNull?.payload;
           if (payload == null) return;
           completer.complete(String.fromCharCodes(payload));
+          await Future.delayed(
+              Duration(seconds: 4)); // hack for stopping the session too soon
           await NfcManager.instance.stopSession();
         }
       },
@@ -32,6 +34,9 @@ class NfcReader {
             NdefRecord.createText(data),
           ]));
           completer.complete();
+          await Future.delayed(
+            Duration(seconds: 4),
+          ); // hack for stopping the session too soon
           await NfcManager.instance.stopSession();
         }
       },

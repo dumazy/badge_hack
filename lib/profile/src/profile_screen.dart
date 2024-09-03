@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
         final viewModel = context.watch<ProfileViewModel>();
         return Scaffold(
           appBar: AppBar(
-            title: Text('Profile'),
+            title: const Text('Profile'),
           ),
           body: Column(
             children: [
@@ -41,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: Center(
                   child: _TagWriter(),
                 ),
