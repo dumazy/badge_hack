@@ -1,3 +1,5 @@
+import 'package:badge_hack/UI/theme.dart';
+import 'package:badge_hack/feed/feed.dart';
 import 'package:badge_hack/firebase_options.dart';
 import 'package:badge_hack/locator.dart';
 import 'package:badge_hack/nfc_reader.dart';
@@ -72,6 +74,10 @@ class BadgeHackAppState extends State<BadgeHackApp> {
             ),
           );
         }
+        return MaterialApp(
+          theme: appTheme(),
+          home: Feed(),
+        );
         return MaterialApp(
           home: Scaffold(
               appBar: AppBar(
