@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nfc_manager/nfc_manager.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,17 +17,25 @@ class BadgeHackAppState extends State<BadgeHackApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: const Text('Flutter & Friends Badge Hack')),
-        body: SafeArea(
-          child: FutureBuilder<bool>(
-            future: NfcManager.instance.isAvailable(),
-            builder: (context, availableSnapshot) => Center(
-              child: Text('NFC manager availability: '
-                  '${availableSnapshot.data}'),
+          appBar:
+              AppBar(title: const Text('Collect your Flutter&Friends friends')),
+          body: SafeArea(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return const ListTile(
+                  leading: Icon(
+                    Icons.flutter_dash,
+                  ),
+                  title: Text('Name'),
+                  subtitle: Text('@handle'),
+                );
+              },
             ),
           ),
-        ),
-      ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            child: const Icon(Icons.search),
+          )),
     );
   }
 }
